@@ -4,7 +4,6 @@ import InputField from './InputField';
 import SubmitButton from './SubmitButton';
 import userstore from './stores/userstore';
 import './css/Login.css';
-
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);

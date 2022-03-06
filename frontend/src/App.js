@@ -4,6 +4,10 @@ import { observer } from 'mobx-react';
 import userstore from './stores/userstore';
 import SubmitButton from './SubmitButton';
 import LoginForm from './LoginForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Dashboard from './Dashboard';
+import Navbar from './Navbar';
+import Header from './Header';
 
 class App extends React.Component {
 
@@ -65,23 +69,26 @@ class App extends React.Component {
     else {
       if (userstore.isLoggedIn) {
         return (
-          <div className="app">
-            <div className='container'>Welcome {userstore.username}
-              <SubmitButton
-                text={'Logout'}
-                disabled={false}
-                onClick={() => this.doLogout()}
-              />
-            </div>
-          </div>
+         <Dashboard/>
+          // <div className='app' >
+          //   <div className='container'>Welcome {userstore.username}
+          //     <SubmitButton
+          //       text={'Logout'}
+          //       disabled={false}
+          //       onClick={() => this.doLogout()}
+          //     />
+          //   </div>
+          // </div>
         );
       }
       return (
-        
-        <div className="app">
-          {/* <div className='container'> */}
-            <LoginForm />
-          </div>
+       
+        //  <Dashboard/>
+        <Dashboard/>
+        // <div className="app">
+        //   <div className='container'>
+            // <LoginForm />
+        //   </div>
         // </div>
        );
     }
