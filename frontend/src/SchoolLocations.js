@@ -5,19 +5,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
 import { Link} from 'react-router-dom';
 import { confirm } from "react-confirm-box";
-// import {useNavigate} from 'react-router-dom';
-const Hospital=() =>{
-  // const navigate = useNavigate();
-  const[hospital,setHospital] =useState([]);
+const SchoolLocations=() =>{
+  const[SchoolLocations,setSchoolLocations] =useState([]);
   useEffect(() =>{
     load_data();
   },[]);
-const deleteHospital =async(e)=> {
+const deleteschoollocations =async(e)=> {
           const result = await confirm("Are you sure do you want to delete?");
           if (result) {
             var id =e;
             try {
-                let res = await fetch(`http://localhost:3000/HospitalDeleteData/${id}`, {
+                let res = await fetch(`http://localhost:3000/deleteschoollocations/${id}`, {
                     method: 'get',
                     headers: {
                         'Accept': 'application/json',
@@ -26,7 +24,6 @@ const deleteHospital =async(e)=> {
                     },
                 });
                 let result = await res.json();
-                
                 alert(result.msg);
                 load_data();
             }
@@ -38,7 +35,7 @@ const deleteHospital =async(e)=> {
     }
   const load_data= async() =>{
     try {
-        let res = await fetch('http://localhost:3000/Hospital', {
+        let res = await fetch('http://localhost:3000/SchoolLocations', {
             method: 'get',
             headers: {
                 'Accept': 'application/json',
@@ -46,7 +43,7 @@ const deleteHospital =async(e)=> {
             }
         });
         let result = await res.json();
-        setHospital(result.data);
+        setSchoolLocations(result.data);
     }
     catch (e) {
         console.log(e);
@@ -56,8 +53,8 @@ const deleteHospital =async(e)=> {
 
   return(
     <div>
-    <div style={{margin: "10px"}}>
-      <Link to='/addHospital' class='btn btn-primary'>Add Hospital</Link>
+      <div style={{margin: "10px"}}>
+      <Link to='/AddSchoolLocations' class='btn btn-primary'>Add School Locations</Link>
     </div>
     
 <Table striped bordered hover variant="dark">
@@ -65,18 +62,18 @@ const deleteHospital =async(e)=> {
     <tr>
       <th>Sr. No</th>
       <th>Name</th>
-      <th>Address</th>
+      <th>Campus</th>
       <th colspan="2">Actions</th>
     </tr>
   </thead>
   <tbody>
-    {hospital.map((hospital,index)=>(
+    {SchoolLocations.map((SchoolLocations,index)=>(
           <tr>
             <td>{index+1}</td>
-            <td>{hospital.Name}</td>
-            <td>{hospital.Address}</td>
-            <td><Link to={`/EditHospital/${hospital.Id}`} class='fa fa-pencil-square'></Link></td>
-            <td onClick={e => deleteHospital(hospital.Id)}><i class="fa fa-trash" aria-hidden="true"></i></td>
+            <td>{SchoolLocations.SchoolName}</td>
+            <td>{SchoolLocations.Campus}</td>
+            <td><Link to={`/EditSchoolLocations/${SchoolLocations.Id}`} class='fa fa-pencil-square'></Link></td>
+            <td onClick={e => deleteschoollocations(SchoolLocations.Id)}><i class="fa fa-trash" aria-hidden="true"></i></td>
           </tr>
    
     ))}
@@ -88,4 +85,4 @@ const deleteHospital =async(e)=> {
     
   );
 }
-export default Hospital;
+export default SchoolLocations;

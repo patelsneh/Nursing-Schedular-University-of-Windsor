@@ -2,19 +2,15 @@ import './App.css';
 import React from 'react';
 import { observer } from 'mobx-react';
 import userstore from './stores/userstore';
-import SubmitButton from './SubmitButton';
 import LoginForm from './LoginForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dashboard from './Dashboard';
-import Navbar from './Navbar';
-import Header from './Header';
 
 class App extends React.Component {
 
   async componentDidMount() {
-    console.log("did mount");
     try {
-      let res = await fetch('/isLoggedIn', {
+      let res = await fetch('http://localhost:3000/isLoggedIn', {
         method: 'post',
         headers: {
           'Accept': 'application/json',
@@ -37,26 +33,26 @@ class App extends React.Component {
         userstore.isLoggedIn = false;
     }
   }
-  async doLogout() {
-    try {
-      let res = await fetch('/logout', {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
+  // async doLogout() {
+  //   try {
+  //     let res = await fetch('/logout', {
+  //       method: 'post',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
 
-      let result = await res.json();
-      if (result && result.success) {
-        userstore.isLoggedIn = false;
-        userstore.username = '';
-      }
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
+  //     let result = await res.json();
+  //     if (result && result.success) {
+  //       userstore.isLoggedIn = false;
+  //       userstore.username = '';
+  //     }
+  //   }
+  //   catch (e) {
+  //     console.log(e);
+  //   }
+  // }
   render() {
     console.log(userstore.loading);
     if (userstore.loading) {
@@ -83,12 +79,12 @@ class App extends React.Component {
       }
       return (
        
-        //  <Dashboard/>
-        <Dashboard/>
+        // //  <Dashboard/>
+        // <Dashboard/>
         // <div className="app">
-        //   <div className='container'>
-            // <LoginForm />
-        //   </div>
+        //   {/* <div className='container'> */}
+            <LoginForm/>
+        //   {/* </div> */}
         // </div>
        );
     }

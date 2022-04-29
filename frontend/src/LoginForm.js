@@ -41,7 +41,7 @@ class LoginForm extends React.Component {
             buttonDisabled: true
         })
         try {
-            let res = await fetch('/login', {
+            let res = await fetch('http://localhost:3000/login', {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
@@ -96,9 +96,9 @@ class LoginForm extends React.Component {
                                     />
                                      </div>
                                      
-                                   
+                                    {/* <input type ="submit">Submit</input> */}
                                     <SubmitButton
-                                        //className="submitButton"
+                                        className="submitButton"
                                         text='Log In'
                                         disabled={this.state.buttonDisabled}
                                         onClick={() => this.doLogin()}

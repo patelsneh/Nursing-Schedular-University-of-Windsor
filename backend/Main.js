@@ -6,11 +6,16 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const Router =require('./Router');
 
+var cors = require('cors')
+app.use(cors())
 
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.json());
 console.log('Testing server');
-
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
 //database
 const db= mysql.createConnection({
     host:'localhost',
@@ -54,8 +59,8 @@ app.use(session({
 }));
 
 new Router(app,db);
-app.get('/',function(req,res){
-    res.sendFile(path.join(__dirname,'build','index.html'));
-
-});
+app.options('*', cors()) 
+// app.get('/',cors(corsOptions),function(req,res){
+//     res.sendFile(path.join(__dirname,'build','index.html'));
+// });
 app.listen(3000);

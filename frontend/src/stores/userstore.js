@@ -3,9 +3,9 @@ class userstore {
     constructor() {
         extendObservable(this, {
 
-            loading: true,
-            isLoggedIn: false,
-            username: ''
+            loading:true,
+            isLoggedIn:false,
+            username:''
         })
     }
 }
