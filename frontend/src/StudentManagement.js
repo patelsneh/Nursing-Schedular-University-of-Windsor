@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import { confirm } from "react-confirm-box";
+import 'mdbreact/dist/css/mdb.css';
+import { MDBDataTableV5 } from 'mdbreact';
 const StudentManagement = () => {
     const [placementLocation, setPlacementLocation] = useState([]);
     useEffect(() => {
@@ -54,12 +56,86 @@ const StudentManagement = () => {
             this.resetForm();
         }
     }
+
+//DATA TABLE
+
+const [datatable, setDatatable] = React.useState({
+    columns: [
+      {
+        label: 'Term',
+        field: 'term',
+        width: 150,
+        attributes: {
+          'aria-controls': 'DataTable',
+          'aria-label': 'Name',
+        },
+      },
+      {
+        label: 'SchoolName',
+        field: 'schoolName',
+        width: 270,
+      },
+      {
+        label: 'FirstName',
+        field: 'firstName',
+        width: 200,
+      },
+      {
+        label: 'LastName',
+        field: 'lastname',
+        sort: 'asc',
+        width: 100,
+      },
+      {
+        label: 'Student Number',
+        field: 'studentNumber',
+        sort: 'disabled',
+        width: 150,
+      },
+      {
+        label: 'Email',
+        field: 'email',
+        sort: 'disabled',
+        width: 100,
+      },
+    ],
+    rows: [
+        {
+          firstName: 'Tiger Nixon',
+          position: 'System Architect',
+          office: 'Edinburgh',
+          age: '61',
+          date: '2011/04/25',
+          salary: '$320',
+        },
+        {
+          name: 'Garrett Winters',
+          position: 'Accountant',
+          office: 'Tokyo',
+          age: '63',
+          date: '2011/07/25',
+          salary: '$170',
+        },
+    ],
+});
+    
     return (
         <div>
 
             <div style={{margin: "10px"}}>
                 <Link to='/AddStudentRecord' class='btn btn-primary'>Add Student Record</Link>
             </div>
+            <MDBDataTableV5
+      hover
+      entriesOptions={[5, 20, 25]}
+      entries={5}
+      pagesAmount={4}
+      data={datatable}
+      pagingTop
+      searchTop
+      searchBottom={false}
+      barReverse
+    />
             {/* <h1>Hello From PlacementLocation</h1> */}
             {/* <Table striped bordered hover variant="dark">
                 <thead>
