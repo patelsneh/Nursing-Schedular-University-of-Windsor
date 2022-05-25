@@ -38,6 +38,8 @@ class Router {
         this.updateYear(app,db);
         this.loadYear(app,db);
         this.loadSchoolData(app,db);
+        this.placementDetails(app,db);
+        this.StudentDetails(app,db);
     }
     login(app, db) {
         app.post('/login', (req, res) => {
@@ -606,6 +608,44 @@ class Router {
                 return data;
             });
 
+        })
+    }
+
+    placementDetails(app, db) {
+        app.get('/placementDetails/:pId', (req, res) => {
+            var id =parseInt(req.body.Id);
+            var query = "SELECT CONCAT(i.First_name,  ' ', i.Last_name) as Instructor_name , h.Name as hospital_name,p.unit, p.section,p.day,p.comments from instructors i JOIN placement_location p on i.Id = p.instructor_id JOIN hospital h on p.hospital_id = h.Id WHERE p.Id=?;"
+            db.query(query,[id], (err, data, fields) => {
+                res.json({
+                    data
+                })
+                console.log(data);
+                return data;
+            });
+        })
+    }
+
+    StudentDetails(app, db) {
+        app.post('/StudentDetails', (req, res) => {
+            let term = req.body.Term;
+            // let id=Number(req.body.Id);
+            let SchoolName = req.body.SchoolName;
+            let pid = Number(req.body.pid);
+            let FirstName = req.body.FirstName;
+            let LastName = req.body.LastName;
+            let Email = req.body.Email;
+            let StudentNumber= parseInt(req.body.StudentNumber);
+            let Comments = req.body.Comments;
+            let value = [term, SchoolName, FirstName, LastName, Email,StudentNumber,Comments,pid];
+            var cols = [value];
+            console.log(cols);
+            var sql = 'INSERT INTO student (Term,Schoolname,FirstName,LastName,Email,StudentNumber,Comments,pid) VALUES ?';
+            db.query(sql, [cols], (err, data, fields) => {
+                res.json({
+                    msg: 'Student Details Added'
+                })
+                return;
+            })
         })
     }
 
