@@ -6,12 +6,15 @@ import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import { confirm } from "react-confirm-box";
 import 'mdbreact/dist/css/mdb.css';
-import { MDBDataTableV5 } from 'mdbreact';
+import MaterialTable from 'material-table';
+import { MDBDataTableV5, MDBTableBody, MDBTableHead } from 'mdbreact';
 const StudentManagement = () => {
-    const [placementLocation, setPlacementLocation] = useState([]);
+    //const [placementLocation, setPlacementLocation] = useState([]);
+    const [studentInfo, setStudentInfo] = useState([]);
     useEffect(() => {
         load_data();
     }, []);
+
     const deletePlacementLocation = async (e) => {
         const result = await confirm("Are you sure do you want to delete?");
         if (result) {
@@ -36,7 +39,7 @@ const StudentManagement = () => {
     }
     const load_data = async () => {
         try {
-            let res = await fetch('http://localhost:3000/load_placement_location', {
+            let res = await fetch('http://localhost:3000/load_student_details', {
                 method: 'get',
                 headers: {
                     'Accept': 'application/json',
@@ -45,7 +48,8 @@ const StudentManagement = () => {
             });
             let result = await res.json();
             console.log(result.data);
-            setPlacementLocation(result.data);
+            setStudentInfo(result.data);
+           
             // setPlacementLocation(result.data1);
             // setPlacementLocation(result.data1);
 
@@ -59,83 +63,213 @@ const StudentManagement = () => {
 
 //DATA TABLE
 
-const [datatable, setDatatable] = React.useState({
-    columns: [
-      {
-        label: 'Term',
-        field: 'term',
-        width: 150,
-        attributes: {
-          'aria-controls': 'DataTable',
-          'aria-label': 'Name',
-        },
-      },
-      {
-        label: 'SchoolName',
-        field: 'schoolName',
-        width: 270,
-      },
-      {
-        label: 'FirstName',
-        field: 'firstName',
-        width: 200,
-      },
-      {
-        label: 'LastName',
-        field: 'lastname',
-        sort: 'asc',
-        width: 100,
-      },
-      {
-        label: 'Student Number',
-        field: 'studentNumber',
-        sort: 'disabled',
-        width: 150,
-      },
-      {
-        label: 'Email',
-        field: 'email',
-        sort: 'disabled',
-        width: 100,
-      },
-    ],
-    rows: [
-        {
-          firstName: 'Tiger Nixon',
-          position: 'System Architect',
-          office: 'Edinburgh',
-          age: '61',
-          date: '2011/04/25',
-          salary: '$320',
-        },
-        {
-          name: 'Garrett Winters',
-          position: 'Accountant',
-          office: 'Tokyo',
-          age: '63',
-          date: '2011/07/25',
-          salary: '$170',
-        },
-    ],
-});
+// const [datatable, setDatatable] = React.useState({
+//  columns: [
+//       {
+//         label: 'Term',
+//         field: 'term',
+//         width: 150,
+//         attributes: {
+//           'aria-controls': 'DataTable',
+//           'aria-label': 'Name',
+//         },
+//       },
+//       {
+//         label: 'SchoolName',
+//         field: 'schoolName',
+//         width: 270,
+//       },
+//       {
+//         label: 'FirstName',
+//         field: 'firstName',
+//         width: 200,
+//       },
+//       {
+//         label: 'LastName',
+//         field: 'lastname',
+//         sort: 'asc',
+//         width: 100,
+//       },
+//       {
+//         label: 'Student Number',
+//         field: 'studentNumber',
+//         sort: 'disabled',
+//         width: 150,
+//       },
+//       {
+//         label: 'Email',
+//         field: 'email',
+//         sort: 'disabled',
+//         width: 100,
+//       },
+//     ]
+//     // rows: [
+//     //     {
+//     //       firstName: 'Tiger',
+//     //       lastName: "Nixon",
+//     //       position: 'System Architect',
+//     //       office: 'Edinburgh',
+//     //       age: '61',
+//     //       date: '2011/04/25',
+//     //       salary: '$320',
+//     //     },
+//     //     {
+//     //       firstName: 'Garrett Winters',
+//     //       position: 'Accountant',
+//     //       office: 'Tokyo',
+//     //       age: '63',
+//     //       date: '2011/07/25',
+//     //       salary: '$170',
+//     //     },
+//     // ],
     
+// });
+
+// const [datatable, setDatatable] = React.useState([])
+// const columns = [
+//     {
+//       field: 'term',
+//       label: 'Term',
+//       width: 150,
+//       attributes: {
+//         'aria-controls': 'DataTable',
+//         'aria-label': 'Name',
+//       },
+//     },
+//     {
+//       label: 'SchoolName',
+//       width: 270,
+//       field: 'schoolName',
+//     },
+//     {
+//       label: 'FirstName',
+//       field: 'firstName',
+//       width: 200,
+//     },
+//     {
+//       label: 'LastName',
+//       field: 'lastname',
+//       sort: 'asc',
+//       width: 100,
+//     },
+//     {
+//       label: 'Student Number',
+//       field: 'studentNumber',
+//       sort: 'disabled',
+//       width: 150,
+//     },
+//     {
+//       label: 'Email',
+//       field: 'email',
+//       sort: 'disabled',
+//       width: 100,
+//     },
+// ]
+    // useEffect(()=>{
+    //     fetch('http://localhost:3000/load_student_details')
+    //     .then(resp=>resp.json())
+    //     .then(resp=>setStudentInfo(resp))
+    // },[])
+
+
     return (
         <div>
 
             <div style={{margin: "10px"}}>
-                <Link to='/AddStudentRecord' class='btn btn-primary'>Add Student Record</Link>
+                <Link to='/AddStudentRecord' className='btn btn-primary'>Add Student Record</Link>
             </div>
-            <MDBDataTableV5
+
+        <MaterialTable
+          columns={[
+            { title: 'First Name', field: 'FirstName' },
+            { title: 'Last Name', field: 'LastName' },
+            { title: 'E-Mail', field: 'Email'},
+            
+          ]}
+          data={[{ FirstName: studentInfo.FirstName, LastName: studentInfo.LastName, Email: studentInfo.Email }]}
+          title="Title"
+        />
+
+
+
+            {/* <MDBDataTableV5 
+            title= "Student Data"
+            hover
+            entriesOptions={[5, 20, 25]}
+            entries={5}
+            pagesAmount={4}
+            data={studentInfo}
+            pagingTop
+            searchTop
+            searchBottom={true}
+            barReverse
+                        >
+  <MDBTableHead color="primary-color">
+    <tr>
+      <th>S.no</th>
+      <th>ID</th>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Year of Study</th>
+      <th>E-Mail</th>
+      <th>Phone Number</th>
+      <th colspan="2">Actions</th>
+
+    </tr>
+  </MDBTableHead>
+  <MDBTableBody>
+    {studentInfo.map((studentInfo,index)=>(
+          <tr>
+            <td>{index+1}</td>
+            <td>{studentInfo.StudentNumber}</td>
+            <td>{studentInfo.LastName}</td>
+            <td>{studentInfo.FirstName}</td>
+            <td>5</td>
+            <td>{studentInfo.Email}</td>
+            <td>9999999999</td>
+            
+          </tr>
+   
+    ))}
+  </MDBTableBody>
+</MDBDataTableV5> */}
+            
+            
+             {/* <MaterialTable
+            title= "Student Data"
+            data={studentInfo}
+            columns={columns}
+            />  */}
+               {/* <MDBDataTableV5
       hover
       entriesOptions={[5, 20, 25]}
       entries={5}
       pagesAmount={4}
-      data={datatable}
+      data={studentInfo}
       pagingTop
       searchTop
       searchBottom={false}
       barReverse
-    />
+      title= "Student Data"
+            
+            columns={columns}
+    >
+           
+            <MDBTableHead color="primary-color">
+                <tr>
+                    <th>Term</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </MDBTableHead>
+            <MDBTableBody>
+                <tr>
+                    <td>{studentInfo.Term}</td>
+                    <td>{studentInfo.First_name}</td>
+                    <td>{studentInfo.Last_name}</td> 
+                </tr>
+            </MDBTableBody>
+            </MDBDataTableV5>   */}
             {/* <h1>Hello From PlacementLocation</h1> */}
             {/* <Table striped bordered hover variant="dark">
                 <thead>

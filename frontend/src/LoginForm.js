@@ -70,13 +70,13 @@ class LoginForm extends React.Component {
     render() {
         return (
             <body>
-           <div class="container">
-	        <div class="screen">
-		        <div class="screen__content">
-			<form class="login">
+           <div className="container">
+	        <div className="screen">
+		        <div className="screen__content">
+			<form className="login">
                 <h3>Nursing Schedular login</h3>
-				<div class="login__field">
-					<i class="login__icon fas fa-user"></i>
+				<div className="login__field">
+					<i className="login__icon fas fa-user"></i>
                                     <InputField
                                         type='text'
                                          placeholder='Username'
@@ -85,8 +85,8 @@ class LoginForm extends React.Component {
                                        
                                     />
                                         </div>
-                                        <div class="login__field">
-					                    <i class="login__icon fas fa-lock"></i>
+                                        <div className="login__field">
+					                    <i className="login__icon fas fa-lock"></i>
                                     <InputField
                                         type='password'
                                         placeholder='Password'
@@ -103,15 +103,15 @@ class LoginForm extends React.Component {
                                         disabled={this.state.buttonDisabled}
                                         onClick={() => this.doLogin()}
                                     >
-                                        <i class="button__icon fas fa-chevron-right"></i>
+                                        <i className="button__icon fas fa-chevron-right"></i>
                                         </SubmitButton>
                                         </form>
                                         </div>
-		<div class="screen__background">
-			<span class="screen__background__shape screen__background__shape4"></span>
-			<span class="screen__background__shape screen__background__shape3"></span>		
-			<span class="screen__background__shape screen__background__shape2"></span>
-			<span class="screen__background__shape screen__background__shape1"></span>
+		<div className="screen__background">
+			<span className="screen__background__shape screen__background__shape4"></span>
+			<span className="screen__background__shape screen__background__shape3"></span>		
+			<span className="screen__background__shape screen__background__shape2"></span>
+			<span className="screen__background__shape screen__background__shape1"></span>
 		</div>		
 	</div>
 </div>

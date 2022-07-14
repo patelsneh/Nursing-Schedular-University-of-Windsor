@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 const AddHospital = () => {
   const navigate = useNavigate();
   const [hospitalvalue, setHospitalvalue] = useState({
-    Id:"NULL",
+    Id:"",
     Name: "",
     Address: ""
   });
@@ -28,6 +28,7 @@ const AddHospital = () => {
         })
       })
       let result = await res.json();
+      console.log(res);
       alert(result.msg);
       navigate('/Hospital');
     }

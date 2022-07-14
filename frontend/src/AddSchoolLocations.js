@@ -15,7 +15,7 @@ const AddSchoolLocations = () => {
   const submitData = async e => {
      e.preventDefault();
     try {
-      let res = await fetch('/School_Location_Add', {
+      let res = await fetch('http://localhost:3000/School_Location_Add', {
         method: 'post',
         headers: {
           'Accept': 'application/json',

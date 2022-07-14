@@ -40,6 +40,7 @@ class Router {
         this.loadSchoolData(app,db);
         this.placementDetails(app,db);
         this.StudentDetails(app,db);
+        this.load_student_details(app, db);
     }
     login(app, db) {
         app.post('/login', (req, res) => {
@@ -149,13 +150,13 @@ class Router {
 
     Hospital_Add(app, db) {
         app.post('/Hospital_Add', (req, res) => {
-            let Id = req.body.Id;
+            let Id =  Number(req.body.pid);
             let Name = req.body.Name;
             let Address = req.body.Address;
-            let value = [Id, Name, Address];
+            let value = [Name, Address];
             var cols = [value];
             console.log(cols);
-            var sql = 'INSERT INTO hospital (Id,Name,Address) VALUES ?';
+            var sql = 'INSERT INTO hospital (Name,Address) VALUES ?';
             db.query(sql, [cols], (err, data, fields) => {
                 res.json({
                     msg: 'Hospital Added'
@@ -226,10 +227,10 @@ class Router {
             let Id = req.body.Id;
             let SchoolName = req.body.SchoolName;
             let Campus = req.body.Campus;
-            let value = [Id, SchoolName, Campus];
+            let value = [SchoolName, Campus];
             var cols = [value];
             console.log(cols);
-            var sql = 'INSERT INTO school_locations (Id,SchoolName,Campus) VALUES ?';
+            var sql = 'INSERT INTO school_locations (SchoolName,Campus) VALUES ?';
             db.query(sql, [cols], (err, data, fields) => {
                 res.json({
                     msg: 'School Location Added'
@@ -292,6 +293,17 @@ class Router {
         })
     }
 
+    load_student_details(app, db) {
+        app.get('/load_student_details', (req, res) => {
+            db.query('SELECT * FROM student', (err, data, fields) => {
+                res.json({
+                    data
+                })
+                return data;
+            });
+        })    
+    }
+
     AddInstructors(app, db) {
         app.post('/AddInstructors', (req, res) => {
             let Id = req.body.Id;
@@ -300,10 +312,10 @@ class Router {
             let Last_name = req.body.Last_name;
             let Email = req.body.Email;
             let Comments = req.body.Comments;
-            let value = [Id, Instructor_number, First_name, Last_name, Email, Comments];
+            let value = [Instructor_number, First_name, Last_name, Email, Comments];
             var cols = [value];
             console.log(cols);
-            var sql = 'INSERT INTO instructors (Id,Instructor_number,First_name,Last_name,Email,Comments) VALUES ?';
+            var sql = 'INSERT INTO instructors (Instructor_number,First_name,Last_name,Email,Comments) VALUES ?';
             db.query(sql, [cols], (err, data, fields) => {
                 res.json({
                     msg: 'Instructors Details Added'
@@ -358,6 +370,9 @@ class Router {
             })
         })
     }
+
+
+   
 
     load_placement_location(app, db) {
         app.get('/load_placement_location', (req, res) => {
