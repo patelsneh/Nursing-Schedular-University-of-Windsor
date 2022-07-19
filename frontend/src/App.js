@@ -1,36 +1,33 @@
-import './App.css';
-import React from 'react';
-import { observer } from 'mobx-react';
-import userstore from './stores/userstore';
-import LoginForm from './LoginForm';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Dashboard from './Dashboard';
+import "./App.css";
+import React from "react";
+import { observer } from "mobx-react";
+import userstore from "./stores/userstore";
+import LoginForm from "./LoginForm";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Dashboard from "./Dashboard";
 
 class App extends React.Component {
-
   async componentDidMount() {
     try {
-      let res = await fetch('http://localhost:3000/isLoggedIn', {
-        method: 'post',
+      let res = await fetch("http://localhost:3000/isLoggedIn", {
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
       let result = await res.json();
       if (result && result.success) {
-          userstore.loading = false;
-          userstore.isLoggedIn = true;
-          userstore.username = result.username;
-      }
-      else {
         userstore.loading = false;
-          userstore.isLoggedIn = false;
-      }
-    }
-    catch (e) {
-      userstore.loading = false;
+        userstore.isLoggedIn = true;
+        userstore.username = result.username;
+      } else {
+        userstore.loading = false;
         userstore.isLoggedIn = false;
+      }
+    } catch (e) {
+      userstore.loading = false;
+      userstore.isLoggedIn = false;
     }
   }
   // async doLogout() {
@@ -58,14 +55,13 @@ class App extends React.Component {
     if (userstore.loading) {
       return (
         <div className="app">
-          <div className='container'>Loading Please..</div>
+          <div className="container">Loading Please..</div>
         </div>
       );
-    }
-    else {
+    } else {
       if (userstore.isLoggedIn) {
         return (
-         <Dashboard/>
+          <Dashboard />
           // <div className='app' >
           //   <div className='container'>Welcome {userstore.username}
           //     <SubmitButton
@@ -78,15 +74,14 @@ class App extends React.Component {
         );
       }
       return (
-       
         // //  <Dashboard/>
         // <Dashboard/>
         // <div className="app">
         //   {/* <div className='container'> */}
-            <LoginForm/>
+        <LoginForm />
         //   {/* </div> */}
         // </div>
-       );
+      );
     }
   }
 }

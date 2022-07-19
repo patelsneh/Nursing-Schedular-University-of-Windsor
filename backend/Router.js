@@ -296,10 +296,10 @@ class Router {
     load_student_details(app, db) {
         app.get('/load_student_details', (req, res) => {
             db.query('SELECT * FROM student', (err, data, fields) => {
-                res.json({
+                return res.json({
                     data
-                })
-                return data;
+                });
+                 
             });
         })    
     }
